@@ -8,12 +8,12 @@ class Home(Tk):
 	def __init__(self):
 		Tk.__init__(self)
 
-		img_load = ImageTk.PhotoImage(Image.open("titre.png"))
+		img_load = ImageTk.PhotoImage(Image.open("img/titre.png"))
 		img = Label(self, image=img_load)
 		img.image = img_load
 		img.pack(side=TOP,pady=60)
 
-		img_load = ImageTk.PhotoImage(Image.open("bar.png"))
+		img_load = ImageTk.PhotoImage(Image.open("img/bar.png"))
 		img = Label(self, image=img_load, borderwidth=0, highlightthickness=0)
 		img.image = img_load
 		img.pack(side=TOP)
