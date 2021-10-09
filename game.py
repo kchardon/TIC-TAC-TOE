@@ -76,24 +76,39 @@ def onclickPlay(event,root):
 
 		print(game.state)
 
-		game.crosses_turn = False
-		new_game = play(game)
-		print(new_game.state)
+		if not game.game_end():
+			game.crosses_turn = False
+			new_game = play(game)
+			print(new_game.state)
 
-		new_case = 0
+			new_case = 0
 
-		for i in range(len(list(new_game.state))):
-			if list(new_game.state)[i] != list(game.state)[i]:
-				new_case = i + 1
-				break
+			for i in range(len(list(new_game.state))):
+				if list(new_game.state)[i] != list(game.state)[i]:
+					new_case = i + 1
+					break
 
-		img = Label(root, image=circle, borderwidth=0, highlightthickness=0)
-		img.image = circle
-		img.place(x=pos[new_case][0],y=pos[new_case][1])
+			img = Label(root, image=circle, borderwidth=0, highlightthickness=0)
+			img.image = circle
+			img.place(x=pos[new_case][0],y=pos[new_case][1])
 
 
-		game.state = new_game.state
-		print(game.state)
+			game.state = new_game.state
+			print(game.state)
+		
+		if game.game_end():
+			print("END")
+			if game.won("X"):
+				txt = Label(root,text="You Won! Very Impressive :D",bg='#C2C7EA',font=("Forte", 25),fg="#ffffff")
+				txt.place(x=100,y=20)
+			elif game.won("O"):
+				txt = Label(root,text="Sadly you lose ...",bg='#C2C7EA',font=("Forte", 25),fg="#ffffff")
+				txt.place(x=100,y=20)
+			else:
+				txt = Label(root,text="Not bad",bg='#C2C7EA',font=("Forte", 25),fg="#ffffff")
+				txt.place(x=100,y=20)
+
+
 
 
 
@@ -216,4 +231,5 @@ def main():
 	app.title("TIC TAC TOE")
 	app.geometry('450x500')
 	app.configure(bg='#C2C7EA')
+	app.resizable(width=False,height=False)
 	app.mainloop()

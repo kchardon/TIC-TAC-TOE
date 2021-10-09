@@ -37,4 +37,5 @@ if __name__ == "__main__":
 	app.title("TIC TAC TOE")
 	app.geometry('450x500')
 	app.configure(bg='#C2C7EA')
+	app.resizable(width=False,height=False)
 	app.mainloop()
