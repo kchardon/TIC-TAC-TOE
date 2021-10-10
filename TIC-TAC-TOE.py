@@ -1,10 +1,8 @@
 from tkinter import *
 from PIL import Image, ImageTk
-import sys
-sys.path.insert(0, '/D/Projets/TICTACTOE/code')
 from tkinter_custom_button import TkinterCustomButton
-import game
-from game import *
+import game_code
+from game_code import *
 
 class Home(Tk):
 	def __init__(self):
@@ -28,7 +26,7 @@ class Home(Tk):
 
 	def onClick_Play(self):
 		Home.destroy(self)
-		game.main()
+		game_code.main()
 
 	
 
