@@ -16,4 +16,12 @@ To play the game, you juste have to run *TIC-TAC-TOE.py*
 Some future improvements that I'm working on :  
 - [ ] Add a score
 - [ ] Add different difficulties of AI
-- [ ] Maybe convert my python code into a .exe file so that it can be run everywhere
+- [ ] Possibility to choose if we want to play X or O
+- [ ] Maybe add a ranking mechanism if the player put his name
+- [ ] Maybe convert my python code into a .exe file so that it can be run everywhere  
+  
+  
+    
+  
+    
+<sup><sup>Made by Katia Chardon in 2021</sub></sub>
