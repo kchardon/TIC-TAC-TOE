@@ -24,7 +24,7 @@ class Game(Tk):
 
 		#Initilize a new state of the game
 		global game
-		game = State_Game("?????????",True)
+		game = State_Game("XOXXO?OX?",True)
 
 		#On click, it plays
 		self.bind('<Button-1>', lambda event, arg=self: onclickPlay(event,arg))
@@ -33,6 +33,7 @@ class Game(Tk):
 		global game
 		self.clear_label_image()
 		game = State_Game("?????????",True)
+	
 	def clear_label_image(self):
 		for i in self.winfo_children():
 			i.destroy()
@@ -78,7 +79,6 @@ def onclickPlay(event,root):
 	cross = ImageTk.PhotoImage(Image.open("img/cross.png"))
 	circle = ImageTk.PhotoImage(Image.open("img/circle.png"))
 
-
 	#if it's a clear case and the game is not finished, plays
 	if case != None and list(game.state)[case-1] == "?" and not game.game_end():
 		#It prints the cross in the selected case
@@ -93,23 +93,26 @@ def onclickPlay(event,root):
 
 		game.crosses_turn = False
 
-		#Let the Os play
-		new_game = play(game)
-		new_case = 0
+		#The AI plays only if the game isn't finished
+		if not game.game_end():
 
-		#Searching for the play made by the AI
-		for i in range(len(list(new_game.state))):
-			if list(new_game.state)[i] != list(game.state)[i]:
-				new_case = i + 1
-				break
+			#Let the Os play
+			new_game = play(game)
+			new_case = 0
 
-		#Printing the O where the AI played
-		root.img_circle = Label(root, image=circle, borderwidth=0, highlightthickness=0)
-		root.img_circle.image = circle
-		root.img_circle.place(x=pos[new_case][0],y=pos[new_case][1])
+			#Searching for the play made by the AI
+			for i in range(len(list(new_game.state))):
+				if list(new_game.state)[i] != list(game.state)[i]:
+					new_case = i + 1
+					break
 
-		#Updating the game state
-		game.state = new_game.state
+			#Printing the O where the AI played
+			root.img_circle = Label(root, image=circle, borderwidth=0, highlightthickness=0)
+			root.img_circle.image = circle
+			root.img_circle.place(x=pos[new_case][0],y=pos[new_case][1])
+
+			#Updating the game state
+			game.state = new_game.state
 	
 	#If the game is finished and the result haven't already be printed, prints it
 	if game.game_end() and game.end == 0:
@@ -200,13 +203,14 @@ def alpha_beta_value(node):
 	return min_value(node, -1, 1)
 
 def max_value(node, alpha, beta):
-    global best_play 
-    if len(node.generate_children()) == 0 or node.game_end(): 
+    global best_play
+    children = node.generate_children()
+    if len(children) == 0 or node.game_end(): 
         return node.value()
 
     v = -HUGE_NUMBER
 
-    for child in node.generate_children():
+    for child in children:
         val = min_value(child, alpha, beta)
         if val > v:
             c = child
@@ -220,13 +224,14 @@ def max_value(node, alpha, beta):
 
 
 def min_value(node, alpha, beta):
-    global best_play 
-    if len(node.generate_children()) == 0 or node.game_end(): 
+    global best_play
+    children = node.generate_children()
+    if len(children) == 0 or node.game_end(): 
         return node.value()
 
     v = +HUGE_NUMBER
 
-    for child in node.generate_children():
+    for child in children:
         val = max_value(child, alpha, beta)
         if val < v:
             c = child
